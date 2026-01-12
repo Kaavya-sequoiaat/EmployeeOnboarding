@@ -1,4 +1,4 @@
-﻿using System.Windows.Controls;
+﻿using EmployeeOnboarding.ViewModels;
 using System.Windows;
 
 namespace EmployeeOnboarding.Views
@@ -8,6 +8,7 @@ namespace EmployeeOnboarding.Views
         public Dashboard()
         {
             InitializeComponent();
+            DataContext = new DashboardViewModel();
         }
     }
 }

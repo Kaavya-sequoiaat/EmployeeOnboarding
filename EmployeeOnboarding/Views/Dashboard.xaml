@@ -30,7 +30,8 @@
 
         <!-- Content -->
         <Frame Grid.Column="1"
-               NavigationUIVisibility="Hidden"
-               Content="{Binding CurrentPage}" />
+       NavigationUIVisibility="Hidden"
+       Content="{Binding CurrentPage}" />
+
     </Grid>
 </Window>
