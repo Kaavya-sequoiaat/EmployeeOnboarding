@@ -1,0 +1,85 @@
+﻿<Page x:Class="EmployeeOnboarding.Views.AddEmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:vm="clr-namespace:EmployeeOnboarding.ViewModels"
+      Background="#F4F6FA">
+
+    <Page.DataContext>
+        <vm:AddEmployeeViewModel/>
+    </Page.DataContext>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30">
+            <Border Background="White" CornerRadius="12" Padding="30"
+                    Width="500" HorizontalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="20" ShadowDepth="3" Opacity="0.25"/>
+                </Border.Effect>
+
+                <StackPanel>
+                    <TextBlock Text="Employee Onboarding"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Margin="0,0,0,20"
+                               Foreground="#333"/>
+
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             materialDesign:HintAssist.Hint="First Name"
+                             Text="{Binding Employee.FirstName}"/>
+
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             materialDesign:HintAssist.Hint="Last Name"
+                             Margin="0,15,0,0"
+                             Text="{Binding Employee.LastName}"/>
+
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             materialDesign:HintAssist.Hint="Email"
+                             Margin="0,15,0,0"
+                             Text="{Binding Employee.Email}"/>
+
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             materialDesign:HintAssist.Hint="Phone"
+                             Margin="0,15,0,0"
+                             Text="{Binding Employee.Phone}"/>
+
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             materialDesign:HintAssist.Hint="Department"
+                             Margin="0,15,0,0"
+                             Text="{Binding Employee.Department}"/>
+
+                    <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             materialDesign:HintAssist.Hint="Position"
+                             Margin="0,15,0,0"
+                             Text="{Binding Employee.Position}"/>
+
+                    <DatePicker Margin="0,15,0,0"
+                                Height="40"
+                                SelectedDate="{Binding Employee.DateOfJoining}"/>
+
+                    <TextBox Height="80"
+                             TextWrapping="Wrap"
+                             materialDesign:HintAssist.Hint="Status"
+                             Margin="0,15,0,0"
+                             Text="{Binding Employee.Status}"/>
+
+                    <Button Content="Save Employee"
+                            Height="45"
+                            Margin="0,25,0,0"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Cursor="Hand"
+                            Command="{Binding SaveCommand}"
+                            Style="{StaticResource MaterialDesignRaisedButton}">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#667EEA" Offset="0"/>
+                                <GradientStop Color="#764BA2" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</Page>
