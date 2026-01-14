@@ -1,34 +1,21 @@
-﻿using EmployeeOnboarding.Commands;
-using System.Windows.Input;
+﻿using Prism.Commands;
+using Prism.Mvvm;
+
 
 namespace EmployeeOnboarding.ViewModels
 {
-    public class DashboardViewModel : BaseViewModel
+    public class DashboardViewModel : BindableBase
     {
-        private object _currentPage;
-        public object CurrentPage
+        private readonly IRegionManager _regionManager; 
+
+        public DelegateCommand NavigateEmployeesCommand { get; }
+
+        public DashboardViewModel(IRegionManager regionManager)
         {
-            get => _currentPage;
-            set => SetProperty(ref _currentPage, value);
-        }
+            _regionManager = regionManager;
 
-        public ICommand ShowHomeCommand { get; }
-        public ICommand ShowAddEmployeeCommand { get; }
-        public ICommand ShowEmployeeListCommand { get; }
-
-        public DashboardViewModel()
-        {
-            ShowHomeCommand = new RelayCommand(_ =>
-                CurrentPage = new HomeViewModel());
-
-            ShowAddEmployeeCommand = new RelayCommand(_ =>
-                CurrentPage = new AddEmployeeViewModel());
-
-            ShowEmployeeListCommand = new RelayCommand(_ =>
-                CurrentPage = new EmployeeListViewModel());
-
-            // Default page
-            CurrentPage = new HomeViewModel();
+            NavigateEmployeesCommand = new DelegateCommand(() =>
+                _regionManager.RequestNavigate("MainRegion", "EmployeeListPage"));
         }
     }
 }

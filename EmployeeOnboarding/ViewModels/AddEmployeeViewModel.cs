@@ -1,36 +1,30 @@
-﻿using EmployeeOnboarding.Commands;
+﻿using Prism.Mvvm;
+using Prism.Commands;
 using EmployeeOnboarding.Models;
 using EmployeeOnboarding.Services;
-using System.Windows;
-using System.Windows.Input;
 
 namespace EmployeeOnboarding.ViewModels
 {
-    public class AddEmployeeViewModel : BaseViewModel
+    public class AddEmployeeViewModel : BindableBase
     {
-        private readonly EmployeeService _service = new();
+        private readonly IEmployeeService _employeeService;
+        private readonly IRegionManager _regionManager;
 
-        private Employee _employee = new();
-        public Employee Employee
+        public Employee Employee { get; } = new Employee();
+
+        public DelegateCommand SaveCommand { get; }
+
+        public AddEmployeeViewModel(IEmployeeService employeeService, IRegionManager regionManager)
         {
-            get => _employee;
-            set => SetProperty(ref _employee, value);
-        }
-
-        public ICommand SaveCommand { get; }
-
-        public AddEmployeeViewModel()
-        {
-            SaveCommand = new RelayCommand(_ => Save());
+            _employeeService = employeeService;
+            _regionManager = regionManager;
+            SaveCommand = new DelegateCommand(Save);
         }
 
         private void Save()
         {
-            _service.AddEmployee(Employee);
-            MessageBox.Show("Employee added successfully!");
-
-            // Reset form
-            Employee = new Employee(); // ✅ PropertyChanged raised automatically
+            _employeeService.AddEmployee(Employee);
+            _regionManager.RequestNavigate("MainRegion", "EmployeeListPage");
         }
     }
 }

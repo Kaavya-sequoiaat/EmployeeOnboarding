@@ -2,11 +2,11 @@
 
 namespace EmployeeOnboarding.Views
 {
-    public partial class Home : Page
+    public partial class Home : UserControl
     {
         public Home()
         {
-            InitializeComponent();
+            InitializeComponent();      
         }
     }
 }

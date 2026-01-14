@@ -1,38 +1,52 @@
-﻿using EmployeeOnboarding.Commands;
+﻿using Prism.Commands;
+using Prism.Mvvm;
 using System.Windows;
-using System.Windows.Input;
 
 namespace EmployeeOnboarding.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    public class LoginViewModel : BindableBase
     {
+        private readonly IRegionManager _regionManager;
+
         private string _username;
-        public Action OnLoginSuccess { get; set; }
         public string Username
         {
             get => _username;
             set => SetProperty(ref _username, value);
         }
 
-        // PasswordBox cannot bind two-way by default, we'll handle via code-behind
-        public string Password { get; set; }
-
-        public ICommand LoginCommand { get; }
-
-        public LoginViewModel()
+        private string _password;
+        public string Password
         {
-            LoginCommand = new RelayCommand(_ => Login());
+            get => _password;
+            set => SetProperty(ref _password, value);
+        }
+
+        public DelegateCommand LoginCommand { get; }
+
+        public LoginViewModel(IRegionManager regionManager)
+        {
+            _regionManager = regionManager;
+            LoginCommand = new DelegateCommand(Login);
         }
 
         private void Login()
         {
+            MessageBox.Show($"DEBUG → Username: {Username}, Password: {Password}");
+
+            if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
+            {
+                MessageBox.Show("Please enter username and password.");
+                return;
+            }
+
             if (Username == "admin" && Password == "1234")
             {
-                OnLoginSuccess?.Invoke();
+                _regionManager.RequestNavigate("MainRegion", "Dashboard");
             }
             else
             {
-                MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid username or password.");
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace EmployeeOnboarding.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : BindableBase
     {
         private object _currentView;
 

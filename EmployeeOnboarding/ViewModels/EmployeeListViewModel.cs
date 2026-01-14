@@ -1,39 +1,29 @@
-﻿using EmployeeOnboarding.Commands;
-using EmployeeOnboarding.Models;
+﻿using Prism.Mvvm;
+using Prism.Commands;
 using EmployeeOnboarding.Services;
-using EmployeeOnboarding.ViewModels;
+using EmployeeOnboarding.Models;
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
 
 namespace EmployeeOnboarding.ViewModels
-
 {
-    public class EmployeeListViewModel : BaseViewModel
+    public class EmployeeListViewModel : BindableBase
     {
-        private readonly EmployeeService _service = new();
+        private readonly IEmployeeService _employeeService;
+        private readonly IRegionManager _regionManager;
 
         public ObservableCollection<Employee> Employees { get; }
 
-        public ICommand DeleteCommand { get; }
+        public DelegateCommand AddEmployeeCommand { get; }
 
-        public EmployeeListViewModel()
+        public EmployeeListViewModel(IEmployeeService employeeService, IRegionManager regionManager)
         {
-            Employees = new ObservableCollection<Employee>(_service.GetEmployees());
-            DeleteCommand = new RelayCommand(Delete);
-        }
+            _employeeService = employeeService;
+            _regionManager = regionManager;
 
-        private void Delete(object parameter)
-        {
-            if (parameter is not Employee emp) return;
+            Employees = new ObservableCollection<Employee>(_employeeService.GetEmployees());
 
-            if (MessageBox.Show($"Delete {emp.FirstName}?",
-                "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                _service.DeleteEmployee(emp.EmployeeId);
-                Employees.Remove(emp);
-            }
+            AddEmployeeCommand = new DelegateCommand(() =>
+                _regionManager.RequestNavigate("MainRegion", "AddEmployeePage"));
         }
     }
 }
-

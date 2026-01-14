@@ -1,11 +1,35 @@
-﻿using System.Windows;
+﻿using Prism.Ioc;
+using Prism.Unity;
+using System.Windows;
+using EmployeeOnboarding.Views;
+using EmployeeOnboarding.Services;
 
 namespace EmployeeOnboarding
 {
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        // No code needed here for now
-        // MaterialDesign resources are loaded via App.xaml
-        // MVVM-friendly default setup
+        protected override Window CreateShell()
+        {
+            return Container.Resolve<MainWindow>();
+        }
+
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterSingleton<IEmployeeService, EmployeeService>();
+
+            containerRegistry.RegisterForNavigation<Home>();
+            containerRegistry.RegisterForNavigation<Login>();
+            containerRegistry.RegisterForNavigation<Dashboard>();
+            containerRegistry.RegisterForNavigation<EmployeeListPage>();
+            containerRegistry.RegisterForNavigation<AddEmployeePage>();
+        }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            Container.Resolve<IRegionManager>()
+                     .RequestNavigate("MainRegion", "Login");
+        }
+
     }
 }

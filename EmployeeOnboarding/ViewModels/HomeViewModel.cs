@@ -1,59 +1,22 @@
-﻿using EmployeeOnboarding.Models;
-using EmployeeOnboarding.Services;
-using System;
+﻿using Prism.Mvvm;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace EmployeeOnboarding.ViewModels
 {
-    public class HomeViewModel : BaseViewModel
+    public class HomeViewModel : BindableBase
     {
-        private readonly EmployeeService _service = new();
+        public int TotalEmployees { get; set; }
+        public int AddedToday { get; set; }
+        public int AddedThisMonth { get; set; }
 
-        private int _totalEmployees;
-        public int TotalEmployees
-        {
-            get => _totalEmployees;
-            set => SetProperty(ref _totalEmployees, value);
-        }
-
-        private int _addedToday;
-        public int AddedToday
-        {
-            get => _addedToday;
-            set => SetProperty(ref _addedToday, value);
-        }
-
-        private int _addedThisMonth;
-        public int AddedThisMonth
-        {
-            get => _addedThisMonth;
-            set => SetProperty(ref _addedThisMonth, value);
-        }
-
-        private ObservableCollection<Employee> _recentEmployees;
-        public ObservableCollection<Employee> RecentEmployees
-        {
-            get => _recentEmployees;
-            set => SetProperty(ref _recentEmployees, value);
-        }
+        public ObservableCollection<object> RecentEmployees { get; } = new();
 
         public HomeViewModel()
         {
-            Load();
-        }
-
-        private void Load()
-        {
-            var list = _service.GetEmployees();
-
-            TotalEmployees = list.Count;
-            AddedToday = list.Count(e => e.CreatedDate.Date == DateTime.Today);
-            AddedThisMonth = list.Count(e => e.CreatedDate.Month == DateTime.Now.Month);
-
-            RecentEmployees = new ObservableCollection<Employee>(
-                list.OrderByDescending(e => e.CreatedDate).Take(5)
-            );
+            // temporary data (or inject service later)
+            TotalEmployees = 10;
+            AddedToday = 2;
+            AddedThisMonth = 5;
         }
     }
 }
