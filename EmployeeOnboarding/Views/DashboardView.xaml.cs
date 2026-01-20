@@ -4,9 +4,9 @@ using System.Windows.Controls;
 
 namespace EmployeeOnboarding.Views
 {
-    public partial class Dashboard : UserControl
+    public partial class DashboardView : UserControl
     {
-        public Dashboard()
+        public DashboardView()
         {
             InitializeComponent();
            

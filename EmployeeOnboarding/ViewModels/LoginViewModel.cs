@@ -32,9 +32,8 @@ namespace EmployeeOnboarding.ViewModels
 
         private void Login()
         {
-            MessageBox.Show($"DEBUG → Username: {Username}, Password: {Password}");
-
-            if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
+            if (string.IsNullOrWhiteSpace(Username) ||
+                string.IsNullOrWhiteSpace(Password))
             {
                 MessageBox.Show("Please enter username and password.");
                 return;
@@ -42,7 +41,9 @@ namespace EmployeeOnboarding.ViewModels
 
             if (Username == "admin" && Password == "1234")
             {
-                _regionManager.RequestNavigate("MainRegion", "Dashboard");
+                _regionManager.RequestNavigate(
+     "MainRegion",
+     nameof(Views.DashboardView));
             }
             else
             {

@@ -3,7 +3,6 @@ using Prism.Unity;
 using System.Windows;
 using EmployeeOnboarding.Views;
 using EmployeeOnboarding.Services;
-
 namespace EmployeeOnboarding
 {
     public partial class App : PrismApplication
@@ -17,18 +16,19 @@ namespace EmployeeOnboarding
         {
             containerRegistry.RegisterSingleton<IEmployeeService, EmployeeService>();
 
-            containerRegistry.RegisterForNavigation<Home>();
-            containerRegistry.RegisterForNavigation<Login>();
-            containerRegistry.RegisterForNavigation<Dashboard>();
-            containerRegistry.RegisterForNavigation<EmployeeListPage>();
-            containerRegistry.RegisterForNavigation<AddEmployeePage>();
+            containerRegistry.RegisterForNavigation<LoginView>();
+            containerRegistry.RegisterForNavigation<DashboardView>();
+            containerRegistry.RegisterForNavigation<HomeView>();
+            containerRegistry.RegisterForNavigation<EmployeeListView>();
+            containerRegistry.RegisterForNavigation<AddEmployeeView>();
         }
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
+
             Container.Resolve<IRegionManager>()
-                     .RequestNavigate("MainRegion", "Login");
+                .RequestNavigate("MainRegion", nameof(Views.LoginView));
         }
 
     }

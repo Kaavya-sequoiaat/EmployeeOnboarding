@@ -2,9 +2,9 @@
 
 namespace EmployeeOnboarding.Views
 {
-    public partial class Login : UserControl
+    public partial class EmployeeListView : UserControl
     {
-        public Login()
+        public EmployeeListView()
         {
             InitializeComponent();
         }

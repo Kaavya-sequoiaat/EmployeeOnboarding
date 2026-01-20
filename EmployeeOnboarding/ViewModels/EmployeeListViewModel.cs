@@ -4,6 +4,7 @@ using EmployeeOnboarding.Services;
 using EmployeeOnboarding.Models;
 using System.Collections.ObjectModel;
 
+
 namespace EmployeeOnboarding.ViewModels
 {
     public class EmployeeListViewModel : BindableBase
@@ -15,15 +16,20 @@ namespace EmployeeOnboarding.ViewModels
 
         public DelegateCommand AddEmployeeCommand { get; }
 
-        public EmployeeListViewModel(IEmployeeService employeeService, IRegionManager regionManager)
+        public EmployeeListViewModel(
+            IEmployeeService employeeService,
+            IRegionManager regionManager)
         {
             _employeeService = employeeService;
             _regionManager = regionManager;
 
-            Employees = new ObservableCollection<Employee>(_employeeService.GetEmployees());
+            Employees = new ObservableCollection<Employee>(
+                _employeeService.GetEmployees());
 
             AddEmployeeCommand = new DelegateCommand(() =>
-                _regionManager.RequestNavigate("MainRegion", "AddEmployeePage"));
+                _regionManager.RequestNavigate(
+                    "MainRegion",
+                    nameof(Views.AddEmployeeView)));
         }
     }
 }

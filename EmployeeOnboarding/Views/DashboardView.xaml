@@ -1,36 +1,31 @@
-﻿<UserControl x:Class="EmployeeOnboarding.Views.Dashboard"
+﻿<UserControl x:Class="EmployeeOnboarding.Views.DashboardView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/">
+
     <Grid>
-      
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="220"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Sidebar -->
-        <StackPanel 
-                    Margin="15">
-
+        <StackPanel Margin="15">
             <Button Content="Home"
                     Margin="0,10"
-                    Command="{Binding ShowHomeCommand}"/>
+                    Command="{Binding NavigateHomeCommand}" />
 
             <Button Content="Add Employee"
                     Margin="0,10"
-                    Command="{Binding ShowAddEmployeeCommand}"/>
+                    Command="{Binding NavigateAddEmployeeCommand}" />
 
             <Button Content="Employee List"
                     Margin="0,10"
-                    Command="{Binding ShowEmployeeListCommand}"/>
-
+                    Command="{Binding NavigateEmployeeListCommand}" />
         </StackPanel>
 
-        <!-- Content -->
-        <Frame Grid.Column="1"
-       NavigationUIVisibility="Hidden"
-       Content="{Binding CurrentPage}" />
-
+        <!-- CONTENT REGION -->
+        <ContentControl Grid.Column="1"
+                        prism:RegionManager.RegionName="ContentRegion"/>
     </Grid>
 </UserControl>

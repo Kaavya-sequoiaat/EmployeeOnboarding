@@ -6,16 +6,27 @@ namespace EmployeeOnboarding.ViewModels
 {
     public class DashboardViewModel : BindableBase
     {
-        private readonly IRegionManager _regionManager; 
+        private readonly IRegionManager _regionManager;
 
-        public DelegateCommand NavigateEmployeesCommand { get; }
+        public DelegateCommand NavigateHomeCommand { get; }
+        public DelegateCommand NavigateAddEmployeeCommand { get; }
+        public DelegateCommand NavigateEmployeeListCommand { get; }
 
         public DashboardViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
 
-            NavigateEmployeesCommand = new DelegateCommand(() =>
-                _regionManager.RequestNavigate("MainRegion", "EmployeeListPage"));
+            NavigateHomeCommand =
+                new DelegateCommand(() =>
+                    _regionManager.RequestNavigate("ContentRegion", nameof(Views.HomeView)));
+
+            NavigateAddEmployeeCommand =
+                new DelegateCommand(() =>
+                    _regionManager.RequestNavigate("ContentRegion", nameof(Views.AddEmployeeView)));
+
+            NavigateEmployeeListCommand =
+                new DelegateCommand(() =>
+                    _regionManager.RequestNavigate("ContentRegion", nameof(Views.EmployeeListView)));
         }
     }
 }
