@@ -7,5 +7,8 @@ namespace EmployeeOnboarding.Services
     {
         List<Employee> GetEmployees();
         void AddEmployee(Employee employee);
+        void UpdateEmployee(Employee employee);
+        void DeleteEmployee(int employeeId);
+    
     }
 }

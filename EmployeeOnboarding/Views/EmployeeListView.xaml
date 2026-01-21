@@ -1,13 +1,14 @@
 ﻿<UserControl x:Class="EmployeeOnboarding.Views.EmployeeListView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:vm="clr-namespace:EmployeeOnboarding.ViewModels"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True">
 
     <Grid Margin="30">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Employee List"
@@ -18,36 +19,44 @@
         <Border Grid.Row="1"
                 Background="White"
                 CornerRadius="12"
-                Padding="20">
+                Padding="20"
+                Margin="0,15,0,15">
+
             <DataGrid ItemsSource="{Binding Employees}"
+                      SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
                       AutoGenerateColumns="False"
                       IsReadOnly="True"
                       CanUserAddRows="False">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding EmployeeId}"/>
-                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
-                    <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                    <DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
-                    <DataGridTextColumn Header="Department" Binding="{Binding Department}"/>
-                    <DataGridTextColumn Header="Position" Binding="{Binding Position}"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
-
-                    <DataGridTemplateColumn Header="Delete">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Command="{Binding DataContext.DeleteCommand,
-                                         RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                        CommandParameter="{Binding}">
-                                    <materialDesign:PackIcon Kind="Delete"
-                                                             Foreground="#E53935"/>
-                                </Button>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="ID" Binding="{Binding EmployeeId}" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                    <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+                    <DataGridTextColumn Header="Department" Binding="{Binding Department}" />
+                    <DataGridTextColumn Header="Position" Binding="{Binding Position}" />
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Add"
+                    Width="100"
+                    Margin="0,0,10,0"
+                    Command="{Binding AddEmployeeCommand}" />
+
+            <Button Content="Edit"
+                    Width="100"
+                    Margin="0,0,10,0"
+                    Command="{Binding EditEmployeeCommand}" />
+
+            <Button Content="Delete"
+                    Width="100"
+                    Command="{Binding DeleteEmployeeCommand}" />
+        </StackPanel>
     </Grid>
 </UserControl>
