@@ -34,6 +34,7 @@ namespace EmployeeOnboarding.ViewModels
             IEmployeeService employeeService,
             IRegionManager regionManager)
         {
+            MessageBox.Show("EmployeeListViewModel CREATED");
             _employeeService = employeeService;
             _regionManager = regionManager;
 
@@ -51,17 +52,20 @@ namespace EmployeeOnboarding.ViewModels
                 new DelegateCommand(DeleteEmployee, CanModifyEmployee);
         }
 
-        public void OnNavigatedTo(INavigationParameters parameters)
-        {
-            LoadEmployees();
-        }
+        
 
         private void LoadEmployees()
         {
             Employees.Clear();
 
-            foreach (var emp in _employeeService.GetEmployees())
+            var list = _employeeService.GetEmployees();
+
+            MessageBox.Show($"Employees fetched from DB: {list.Count}");
+
+            foreach (var emp in list)
+            {
                 Employees.Add(emp);
+            }
         }
 
         private bool CanModifyEmployee()
@@ -97,12 +101,10 @@ namespace EmployeeOnboarding.ViewModels
             LoadEmployees();
         }
 
-        public bool IsNavigationTarget(INavigationParameters parameters) => true;
-        public void OnNavigatedFrom(INavigationParameters parameters) { }
-
+        
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-           
+            LoadEmployees();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
